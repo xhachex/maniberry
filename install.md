@@ -8,6 +8,7 @@ python3 -m pip install flask-login
 python3 -m pip install flask-wtf
 python3 -m pip install flask-sqlalchemy
 
+
 #sudo apt install mariadb-server
 
-python3 -m pip install PyMySQL
+
