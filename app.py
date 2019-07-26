@@ -1,12 +1,12 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, redirect, render_template, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-#from models import User
+from flask_wtf import FlaskForm
+from werkzeug.security import check_password_hash, generate_password_hash
+from wtforms import BooleanField, PasswordField, StringField
+from wtforms.validators import Email, InputRequired, Length
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'S3cr3t'
@@ -18,7 +18,10 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-### Modelos ### 
+########################################################
+##################### MODELS ###########################
+########################################################
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -32,7 +35,10 @@ def load_user(user_id):
 
 #class Clientes(db.Model):
 
-### Classes ###
+########################################################
+##################### CLASSES ##########################
+########################################################
+
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
@@ -43,7 +49,9 @@ class RegisterForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
 
-### Routes ###
+########################################################
+####################### Routes #########################
+########################################################
 
 @app.route('/')
 def index():
@@ -83,17 +91,33 @@ def dashboard():
 def reports():
     return render_template('reports.html')
 
+@app.route('/analytics')
+@login_required
+def analytics():
+    return render_template('analytics.html')
+
+@app.route('/carousel')
+@login_required
+def carousel():
+    return render_template('carousel.html')
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/basic')
+def basic():
+    return render_template('basic.html')
+
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template("error.html", error="Página no encontrada..."), 404
+    return render_template("error", error="Página no encontrada..."), 404
 
-#-------------------------------------------------------------------------------
+########################################################
+#######################  APP  ##########################
+########################################################
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

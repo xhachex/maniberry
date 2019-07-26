@@ -2,12 +2,11 @@
 {% from "layouts.html" import navbar %}
 {% from "layouts.html" import sidebar %}
 {% from "graphs.html" import addons %}
-{% from "graphs.html" import bars %}
-{% from "graphs.html" import doughnut %}
 {% from "graphs.html" import lines %}
+{% from "graphs.html" import bars %}
 
 {% block title %}
-Reports
+Analytics
 {% endblock %}
 
 {% block styles %}
@@ -16,7 +15,7 @@ Reports
 {% endblock %}
 
 {% block scripts %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 {% endblock %}
 
 {% block navbar %}
@@ -27,22 +26,18 @@ Reports
     <div class="container-fluid">
       {{ sidebar() }}
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Reports</h1>
+          <h1 class="page-header">Analytics</h1>
           <div class="row placeholders">
             {{ addons() }}
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               {{ bars() }}
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               {{ lines() }}
             </div>
-            <div class="col-sm-4">
-              {{ doughnut() }}
-              </div>
           </div>
           <h2 class="sub-header">Top Buyers</h2>
           <input type="text" class="form-control" placeholder="Search...">
         </div>
     </div>
 {% endblock %}
-
