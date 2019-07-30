@@ -1,0 +1,58 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "layouts.html" import navbar %}
+{% from "layouts.html" import sidebar %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+{{ navbar() }}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  {{ sidebar() }}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">ABM</h1>
+      <div class="row placeholders">
+        <div class="col-sm-2">
+      <!-- Agregar Contenido -->
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li> <a href="#">HTML</a></li>
+            <li> <a href="#">CSS</a></li>
+            <li> <a href="#">PHP</a></li>
+          </ul>
+      </div>
+      <br>
+      <form class="form-signin" method='POST' action="/login">
+        <h2 class="form-signin-heading">New Client</h2>
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.name) }}
+        {{ wtf.form_field(form.surname) }}
+        {{ wtf.form_field(form.cuil) }}
+        {{ wtf.form_field(form.email) }}
+        <button type="submit" class="btn btn-primary">Ok</button>
+        <button type="button" class="btn btn-dangerl">Cancel</button>
+      </form>
+
+      
+      </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

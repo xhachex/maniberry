@@ -33,11 +33,23 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-#class Clientes(db.Model):
+class Cliente(db.Model):
+    __tablename__ = 'clientes'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
+    surname = db.Column(db.String(30))
+    cuil = db.Column(db.Integer, unique=True)
+    email = db.Column(db.String(50), unique=True)
 
 ########################################################
 ##################### CLASSES ##########################
 ########################################################
+
+class ClientForm(FlaskForm):
+    name = StringField('name', validators=[InputRequired(), Length(min=1, max=30)])
+    surname = StringField('surname', validators=[InputRequired(), Length(min=1, max=30)])
+    cuil = StringField('cuil', validators=[InputRequired(), Length(11)])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=4, max=50)])
 
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
@@ -100,6 +112,12 @@ def analytics():
 @login_required
 def carousel():
     return render_template('carousel.html')
+
+@app.route('/abm', methods=['GET', 'POST'])
+@login_required
+def abm():
+    form = ClientForm()
+    return render_template('abm.html', form=form)
 
 @app.route('/logout')
 @login_required

@@ -1,0 +1,33 @@
+{% extends "bootstrap/base.html" %}
+{% from "layouts.html" import navbar %}
+{% from "layouts.html" import sidebar %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+{{ navbar() }}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  {{ sidebar() }}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">Reports</h1>
+      <div class="row placeholders">
+      <!-- Agregar Contenido-->
+      </div>
+    </div>
+</div>
+{% endblock %}
